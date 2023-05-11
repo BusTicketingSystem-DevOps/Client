@@ -14,7 +14,10 @@ function AdminBuses() {
   const getBuses = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/buses/get-all-buses", {});
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/buses/get-all-buses",
+        {}
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         setBuses(response.data.data);
@@ -30,9 +33,12 @@ function AdminBuses() {
   const deleteBus = async (id) => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/buses/delete-bus", {
-        _id: id,
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/buses/delete-bus",
+        {
+          _id: id,
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);

@@ -11,11 +11,14 @@ function Register() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/users/register", values);
+      const response = await axios.post(
+        "http://localhost:5000/api/users/register",
+        values
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);
-        navigate('/login');
+        navigate("/login");
       } else {
         message.error(response.data.message);
       }

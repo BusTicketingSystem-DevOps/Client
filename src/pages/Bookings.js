@@ -15,7 +15,10 @@ function Bookings() {
   const getBookings = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/bookings/get-bookings-by-user-id", {});
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/bookings/get-bookings-by-user-id",
+        {}
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         const mappedData = response.data.data.map((booking) => {
@@ -66,11 +69,13 @@ function Bookings() {
       dataIndex: "action",
       render: (text, record) => (
         <div>
-          <p className="text-md underline"
+          <p
+            className="text-md underline"
             onClick={() => {
               setSelectedBooking(record);
               setShowPrintModal(true);
-            }}>
+            }}
+          >
             Print
           </p>
         </div>
@@ -89,13 +94,12 @@ function Bookings() {
 
   return (
     <div>
-    <PageTitle title="Bookings" />
-    <div className="mt-2">
-      <Table dataSource={bookings} columns={columns} />
-    </div>
+      <PageTitle title="Bookings" />
+      <div className="mt-2">
+        <Table dataSource={bookings} columns={columns} />
+      </div>
 
-
-    {showPrintModal && (
+      {showPrintModal && (
         <Modal
           title="Print Ticket"
           onCancel={() => {
@@ -121,8 +125,9 @@ function Bookings() {
             </p>
             <hr />
             <p>
-              <span>Seat Numbers:</span> <br /></p>
-                {`${selectedBooking.seats}`}
+              <span>Seat Numbers:</span> <br />
+            </p>
+            {`${selectedBooking.seats}`}
             <hr />
             <p>
               <span>Total Amount:</span>{" "}
@@ -131,9 +136,8 @@ function Bookings() {
           </div>
         </Modal>
       )}
-
-  </div>
-  )
+    </div>
+  );
 }
 
-export default Bookings
+export default Bookings;

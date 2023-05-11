@@ -14,7 +14,10 @@ function AdminUsers() {
   const getUsers = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/users/get-all-users", {});
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/users/get-all-users",
+        {}
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         setUsers(response.data.data);

@@ -3,7 +3,6 @@ import { Col, Form, message, Modal, Row } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../redux/alertsSlice";
-import moment from "moment";
 
 function BusForm({
   showBusForm,
@@ -20,12 +19,18 @@ function BusForm({
       dispatch(ShowLoading());
       let response = null;
       if (type === "add") {
-        response = await axiosInstance.post("/api/buses/add-bus", values);
+        response = await axiosInstance.post(
+          "http://localhost:5000/api/buses/add-bus",
+          values
+        );
       } else {
-        response = await axiosInstance.post("/api/buses/update-bus", {
-          ...values,
-          _id: selectedBus._id,
-        });
+        response = await axiosInstance.post(
+          "http://localhost:5000/api/buses/update-bus",
+          {
+            ...values,
+            _id: selectedBus._id,
+          }
+        );
       }
       if (response.data.success) {
         message.success(response.data.message);

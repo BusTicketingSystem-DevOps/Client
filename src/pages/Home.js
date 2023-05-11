@@ -11,7 +11,7 @@ function Home() {
   const [buses, setBuses] = useState([]);
   const { user } = useSelector((state) => state.users);
   const [filters = {}, setFilters] = useState({});
-  
+
   const getBuses = async () => {
     const tempFilters = {};
     Object.keys(filters).forEach((key) => {
@@ -21,11 +21,15 @@ function Home() {
     });
     try {
       dispatch(ShowLoading());
-      const response = await axiosInstance.post("/api/buses/get-all-buses", { filters: tempFilters }, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axiosInstance.post(
+        "http://localhost:5000/api/buses/get-all-buses",
+        { filters: tempFilters },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         setBuses(response.data.data);
