@@ -4,13 +4,13 @@ import { HideLoading, ShowLoading } from "../redux/alertsSlice";
 import { Col, Row, message } from "antd";
 import { axiosInstance } from "../helpers/axiosInstance";
 import Bus from "../components/Bus";
-import axios from "axios";
+import MultiBus from "../components/MultiBus";
 
 function Home() {
   const dispatch = useDispatch();
   const [buses, setBuses] = useState([]);
-  const { user } = useSelector((state) => state.users);
   const [filters = {}, setFilters] = useState({});
+  const [multibuses, SetMultiBuses] = useState([]);
   
   const getBuses = async () => {
     const tempFilters = {};
@@ -29,12 +29,23 @@ function Home() {
       dispatch(HideLoading());
       if (response.data.success) {
         setBuses(response.data.data);
+        if(response.data.multi){
+          SetMultiBuses(response.data.multi);
+        console.log("Multi: ",response.data.multi);
+        }
       } else {
         message.error(response.data.message);
       }
     } catch (error) {
       dispatch(HideLoading());
       message.error(error.message);
+    }
+    finally{
+      setFilters({
+        from:"",
+        to:"",
+        journeyDate:"",
+      });
     }
   };
 
@@ -79,12 +90,16 @@ function Home() {
               </button>
               <button
                 className="outlined px-3"
-                onClick={() =>
-                  setFilters({
-                    from: "",
-                    to: "",
-                    journeyDate: "",
-                  })
+                onClick={async() =>
+                  {
+                    // await setFilters({
+                    //   from:"",
+                    //   to:"",
+                    //   journeyDate:"",
+                    // });
+                    console.log("filters:",filters)
+                    await getBuses();
+                  }
                 }
               >
                 Clear
@@ -103,6 +118,19 @@ function Home() {
               </Col>
             ))}
         </Row>
+        <hr />
+        {multibuses.length>0 ? (<div>
+          <h1>Travel with One Hop</h1>
+        <Row gutter={[15,15]}>
+          {
+            multibuses.map((multibus) => (
+              <Col lg={12} xs={24} sm={24}>
+                <MultiBus multibus={multibus} />
+              </Col>
+            ))
+          }
+        </Row>
+      </div>) : (buses.length>0 ?"":<h1>Sorry! No Buses Found!!</h1>)}
       </div>
     </div>
   );
