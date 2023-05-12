@@ -18,7 +18,7 @@ function BookMultiBuses() {
     const getBus = async () => {
         try {
           dispatch(ShowLoading());
-          const response = await axiosInstance.post("/api/buses/get-bus-by-id", {
+          const response = await axiosInstance.post("http://localhost:5000/api/buses/get-bus-by-id", {
             _id: params.id1,
           });
           dispatch(HideLoading());
@@ -36,7 +36,7 @@ function BookMultiBuses() {
       const bookNow = async (transactionId) => {
         try {
           dispatch(ShowLoading());
-          const response = await axiosInstance.post("/api/bookings/book-seat", {
+          const response = await axiosInstance.post("http://localhost:5000/api/bookings/book-seat", {
             bus: bus._id,
             seats: selectedSeats,
             transactionId,
@@ -58,7 +58,7 @@ function BookMultiBuses() {
       const onToken = async (token)=>{
         try {
           dispatch(ShowLoading());
-          const response = await axiosInstance.post("/api/bookings/make-payment", {
+          const response = await axiosInstance.post("http://localhost:5000/api/bookings/make-payment", {
             token,
             amount: selectedSeats.length * bus.fare * 100,
           });

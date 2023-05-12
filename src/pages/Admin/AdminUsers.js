@@ -57,7 +57,7 @@ function AdminUsers() {
 
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
-        "/api/users/update-user-permissions",
+        "http://localhost:5000/api/users/update-user-permissions",
         payload
       );
       dispatch(HideLoading());
