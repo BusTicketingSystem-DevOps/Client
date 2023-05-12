@@ -11,7 +11,11 @@ function Login() {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/users/login", values);
+      // "proxy": "http://localhost:5000/
+      const response = await axios.post(
+        "http://localhost:5000/api/users/login",
+        values
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         message.success(response.data.message);

@@ -18,7 +18,7 @@ function AdminBookings() {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
-        "/api/bookings/get-all-bookings",
+        "http://localhost:5000/api/bookings/get-all-bookings",
         {}
       );
       dispatch(HideLoading());

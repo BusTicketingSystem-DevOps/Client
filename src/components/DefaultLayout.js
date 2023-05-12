@@ -18,11 +18,11 @@ function DefaultLayout({ children }) {
       icon: "ri-file-list-line",
       path: "/bookings",
     },
-    {
-      name: "Profile",
-      icon: "ri-user-line",
-      path: "/profile",
-    },
+    // {
+    //   name: "Profile",
+    //   icon: "ri-user-line",
+    //   path: "/profile",
+    // },
     {
       name: "Logout",
       icon: "ri-logout-box-line",
@@ -58,22 +58,21 @@ function DefaultLayout({ children }) {
   ];
   const menuToBeRendered = user?.isAdmin ? adminMenu : userMenu;
   let activeRoute = window.location.pathname;
-  if(window.location.pathname.includes('book-now'))
-  {
+  if (window.location.pathname.includes("book-now")) {
     activeRoute = "/";
   }
 
   return (
     <div className="layout-parent">
       <div className="sidebar">
-        {
-          !collapsed && (
-            <div className="sidebar-header">
-             <h1 className="logo">Welcome {user?.name}!<hr></hr></h1>
-             <h1 className="role">Role : {user?.isAdmin ? 'Admin' : 'User'}</h1>
-        </div>
-          )
-        }
+        {!collapsed && (
+          <div className="sidebar-header">
+            <h1 className="logo">
+              Welcome {user?.name}!<hr></hr>
+            </h1>
+            <h1 className="role">Role : {user?.isAdmin ? "Admin" : "User"}</h1>
+          </div>
+        )}
         <div className="d-flex flex-column gap-3 justify-content-start menu">
           {menuToBeRendered.map((item, index) => {
             return (
