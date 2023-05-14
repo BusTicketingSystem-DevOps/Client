@@ -30,13 +30,14 @@ function AdminBuses() {
     }
   };
 
-  const deleteBus = async (id) => {
+  const deleteBus = async (id, number) => {
     try {
       dispatch(ShowLoading());
       const response = await axiosInstance.post(
         "http://localhost:5000/api/buses/delete-bus",
         {
           _id: id,
+          number: number,
         }
       );
       dispatch(HideLoading());
@@ -85,7 +86,7 @@ function AdminBuses() {
           <i
             class="ri-delete-bin-line"
             onClick={() => {
-              deleteBus(record._id);
+              deleteBus(record._id, record.number);
             }}
           ></i>
           <i
